@@ -40,4 +40,3 @@ Authorization: Bearer {{authToken}}
 GET  {{baseUrl}}/questions?
 Content-Type: application/json
 Authorization: Bearer {{authToken}}
-la
