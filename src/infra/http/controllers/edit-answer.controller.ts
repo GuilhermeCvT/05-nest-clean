@@ -6,7 +6,8 @@ import { z } from "zod";
 import { EditAnswerUseCase } from "@/domain/forum/application/use-cases/edit-answer"; 
 
 const editAnswerBodySchema = z.object({
-  content: z.string()
+  content: z.string(),
+  attachments: z.array(z.string().uuid()).default([])
 })
 
 const bodyValidationPipe = new ZodValidationPipe(editAnswerBodySchema)
@@ -24,13 +25,13 @@ export class EditAnswerController {
     @Param('id') answerId: string
   ) {
     const userId = user.sub
-    const { content } = body
+    const { content, attachments } = body
     
     const result = await this.editAnswer.execute({
       answerId,
       authorId: userId,
       content,
-      attachmentsIds: [],
+      attachmentsIds: attachments,
     })
 
     if(result.isLeft()) 
