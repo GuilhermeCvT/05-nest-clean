@@ -9,12 +9,16 @@ import { waitFor } from "test/utils/wait-for"
 import { OnQuestionBestAnswerChosen } from "./on-question-best-answer-chosen"
 import { InMemoryQuestionAttachmentsRepository } from "test/repositories/in-memory-question-attachments-repositories"
 import { InMemoryNotificationsRepository } from "test/repositories/in-memory-notifications-repository"
+import { InMemoryStudentsRepository } from "test/repositories/in-memory-students-repository"
+import { InMemoryAttachmentsRepository } from "test/repositories/in-memory-attachments-repository"
 
 let inMemoryQuestionAttachmentsRepository: InMemoryQuestionAttachmentsRepository
 let inMemoryQuestionsRepository: InMemoryQuestionsRepository
 let inMemoryAnswerAttachmentsRepository: InMemoryAnswerAttachmentsRepository
 let inMemoryAnswersRepository: InMemoryAnswersRepository
 let inMemoryNotificationsRepository: InMemoryNotificationsRepository
+let inMemoryStudentsRepository: InMemoryStudentsRepository
+let inMemoryAttachmentsRepository: InMemoryAttachmentsRepository
 let sendNotificationUseCase: SendNotificationUseCase
 let sendNotificationExecuteSpy: MockInstance<
   (
@@ -27,7 +31,13 @@ describe('On Question Best Answer Chosen', () => {
     inMemoryAnswerAttachmentsRepository = new InMemoryAnswerAttachmentsRepository()
     inMemoryAnswersRepository = new InMemoryAnswersRepository(inMemoryAnswerAttachmentsRepository)
     inMemoryQuestionAttachmentsRepository = new InMemoryQuestionAttachmentsRepository()
-    inMemoryQuestionsRepository = new InMemoryQuestionsRepository(inMemoryQuestionAttachmentsRepository)
+    inMemoryStudentsRepository = new InMemoryStudentsRepository()
+    inMemoryAttachmentsRepository = new InMemoryAttachmentsRepository()
+    inMemoryQuestionsRepository = new InMemoryQuestionsRepository(
+      inMemoryQuestionAttachmentsRepository, 
+      inMemoryAttachmentsRepository,
+      inMemoryStudentsRepository 
+    )
     inMemoryNotificationsRepository = new InMemoryNotificationsRepository()
     sendNotificationUseCase = new SendNotificationUseCase(inMemoryNotificationsRepository)
 
