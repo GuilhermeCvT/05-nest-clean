@@ -6,8 +6,8 @@ export interface NotificationProps {
   recipientId: UniqueEntityID
   title: string
   content: string
-  readAt?: Date
-  createdAt: Date
+  readAt?: Date | null
+  createdAt: Date | null
 }
 
 export class Notification extends Entity<NotificationProps> {
@@ -28,6 +28,10 @@ export class Notification extends Entity<NotificationProps> {
 
   get title() {
     return this.props.title
+  }
+
+  get content() {
+    return this.props.content
   }
 
   get readAt() {
